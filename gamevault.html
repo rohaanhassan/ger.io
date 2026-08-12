@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GameVault — Level Up Your World</title>
+<style>
+:root{
+  --bg:#080b14; --panel:#111827; --panel2:#151d2e;
+  --text:#f7f9ff; --muted:#9ca9c2; --accent:#7c5cff;
+  --accent2:#00e5ff; --danger:#ff3d81; --border:#26314a;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  font-family:Inter,Segoe UI,Arial,sans-serif;background:
+  radial-gradient(circle at 80% 10%,rgba(124,92,255,.18),transparent 28%),
+  radial-gradient(circle at 15% 35%,rgba(0,229,255,.08),transparent 25%),var(--bg);
+  color:var(--text);line-height:1.5;
+}
+a{text-decoration:none;color:inherit}
+.container{width:min(1180px,92%);margin:auto}
+header{
+  position:sticky;top:0;z-index:10;background:rgba(8,11,20,.82);
+  backdrop-filter:blur(16px);border-bottom:1px solid rgba(255,255,255,.06)
+}
+.nav{height:72px;display:flex;align-items:center;justify-content:space-between;gap:25px}
+.logo{font-size:1.5rem;font-weight:900;letter-spacing:-1px}
+.logo span{color:var(--accent2)}
+nav{display:flex;gap:25px}
+nav a{color:#cbd5e1;font-weight:700;font-size:.95rem}
+nav a:hover{color:white}
+.menu{display:none;background:none;border:0;color:white;font-size:1.6rem}
+.hero{min-height:650px;display:grid;place-items:center;position:relative;overflow:hidden}
+.hero:before{
+  content:"";position:absolute;inset:0;
+  background:linear-gradient(90deg,rgba(8,11,20,.98) 5%,rgba(8,11,20,.78) 48%,rgba(8,11,20,.15)),
+  linear-gradient(0deg,var(--bg),transparent 35%);
+}
+.hero-content{position:relative;z-index:1;width:100%;padding:90px 0}
+.badge{
+  display:inline-block;padding:8px 13px;border:1px solid #3a4663;border-radius:999px;
+  color:#b8c5ff;background:rgba(124,92,255,.1);font-size:.8rem;font-weight:800;
+  margin-bottom:20px;text-transform:uppercase;letter-spacing:1px
+}
+h1{font-size:clamp(3rem,7vw,6rem);line-height:.95;max-width:760px;letter-spacing:-5px}
+h1 span{color:var(--accent2)}
+.hero p{max-width:590px;color:var(--muted);font-size:1.1rem;margin:25px 0}
+.buttons{display:flex;gap:12px;flex-wrap:wrap}
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;padding:13px 20px;
+  border-radius:11px;font-weight:900;border:1px solid transparent;cursor:pointer
+}
+.primary{background:linear-gradient(135deg,var(--accent),#9a7cff);box-shadow:0 10px 30px rgba(124,92,255,.25)}
+.secondary{border-color:#35415d;background:#111827}
+.btn:hover{transform:translateY(-2px)}
+section{padding:80px 0}
+.section-head{display:flex;align-items:end;justify-content:space-between;margin-bottom:28px;gap:20px}
+.section-head h2{font-size:2rem}
+.section-head p{color:var(--muted)}
+.search{
+  width:270px;background:var(--panel);border:1px solid var(--border);border-radius:10px;
+  padding:12px 14px;color:white;outline:none
+}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+.card{
+  background:linear-gradient(180deg,var(--panel2),var(--panel));
+  border:1px solid var(--border);border-radius:16px;overflow:hidden;
+  transition:.25s;position:relative
+}
+.card:hover{transform:translateY(-6px);border-color:#536384;box-shadow:0 18px 45px rgba(0,0,0,.25)}
+.cover{height:180px;display:grid;place-items:center;font-size:4rem;background:
+  radial-gradient(circle at 50% 40%,rgba(255,255,255,.13),transparent 35%),#202b43}
+.cover.c1{background-color:#182b48}.cover.c2{background-color:#30203d}
+.cover.c3{background-color:#183c38}.cover.c4{background-color:#422722}
+.card-body{padding:16px}
+.card h3{font-size:1.05rem;margin-bottom:5px}
+.meta{display:flex;justify-content:space-between;color:var(--muted);font-size:.8rem}
+.rating{color:#ffd45c;font-weight:800}
+.tags{display:flex;gap:6px;flex-wrap:wrap;margin-top:13px}
+.tag{font-size:.7rem;padding:4px 8px;background:#202a40;border-radius:6px;color:#bac6dc}
+.feature{
+  display:grid;grid-template-columns:1.1fr .9fr;gap:25px;align-items:stretch
+}
+.feature-text,.news{
+  background:var(--panel);border:1px solid var(--border);border-radius:18px;padding:32px
+}
+.feature-text h2{font-size:2.4rem;line-height:1.1;margin:10px 0 15px}
+.feature-text p{color:var(--muted);margin-bottom:22px}
+.news-item{padding:16px 0;border-bottom:1px solid var(--border)}
+.news-item:last-child{border:0}
+.news-item small{color:var(--accent2);font-weight:800}
+.news-item h3{margin:4px 0}
+.news-item p{color:var(--muted);font-size:.9rem}
+.newsletter{
+  padding:45px;border-radius:20px;border:1px solid #3a4560;
+  background:linear-gradient(135deg,rgba(124,92,255,.2),rgba(0,229,255,.06))
+}
+.newsletter h2{font-size:2rem}
+.form{display:flex;gap:10px;margin-top:20px}
+.form input{
+  flex:1;min-width:0;background:#0b101c;border:1px solid var(--border);
+  border-radius:10px;padding:14px;color:white;outline:none
+}
+footer{border-top:1px solid var(--border);padding:30px 0;color:var(--muted)}
+.footer{display:flex;justify-content:space-between;gap:20px}
+.no-results{grid-column:1/-1;color:var(--muted);padding:30px;text-align:center}
+@media(max-width:850px){
+  nav{display:none}.menu{display:block}
+  .grid{grid-template-columns:repeat(2,1fr)}
+  .feature{grid-template-columns:1fr}
+}
+@media(max-width:560px){
+  .hero{min-height:590px} h1{letter-spacing:-3px}
+  .grid{grid-template-columns:1fr}
+  .section-head{display:block}.search{width:100%;margin-top:15px}
+  .form{flex-direction:column}.footer{flex-direction:column}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="container nav">
+    <a class="logo" href="#">GAME<span>VAULT</span> 🎮</a>
+    <nav>
+      <a href="#games">Games</a>
+      <a href="#featured">Featured</a>
+      <a href="#news">News</a>
+      <a href="#community">Community</a>
+    </nav>
+    <button class="menu" onclick="toggleMenu()">☰</button>
+  </div>
+</header>
+
+<main>
+<section class="hero">
+  <div class="container hero-content">
+    <span class="badge">The ultimate gaming hub</span>
+    <h1>PLAY MORE.<br><span>LEVEL UP.</span></h1>
+    <p>Discover the hottest games, gaming news, reviews and everything you need for your next adventure.</p>
+    <div class="buttons">
+      <a class="btn primary" href="#games">Explore Games →</a>
+      <a class="btn secondary" href="#news">Latest News</a>
+    </div>
+  </div>
+</section>
+
+<section id="games">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <h2>🔥 Trending Games</h2>
+        <p>What gamers are playing right now.</p>
+      </div>
+      <input class="search" id="search" placeholder="Search games..." oninput="filterGames()">
+    </div>
+
+    <div class="grid" id="gameGrid">
+      <article class="card" data-name="Cyberpunk 2077">
+        <div class="cover c1">🌆</div><div class="card-body">
+          <h3>Cyberpunk 2077</h3><div class="meta"><span>RPG</span><span class="rating">★ 9.2</span></div>
+          <div class="tags"><span class="tag">PC</span><span class="tag">PS5</span><span class="tag">Xbox</span></div>
+        </div>
+      </article>
+      <article class="card" data-name="Minecraft">
+        <div class="cover c2">⛏️</div><div class="card-body">
+          <h3>Minecraft</h3><div class="meta"><span>Sandbox</span><span class="rating">★ 9.5</span></div>
+          <div class="tags"><span class="tag">PC</span><span class="tag">Mobile</span></div>
+        </div>
+      </article>
+      <article class="card" data-name="Forza Horizon 5">
+        <div class="cover c3">🏎️</div><div class="card-body">
+          <h3>Forza Horizon 5</h3><div class="meta"><span>Racing</span><span class="rating">★ 9.0</span></div>
+          <div class="tags"><span class="tag">PC</span><span class="tag">Xbox</span></div>
+        </div>
+      </article>
+      <article class="card" data-name="Elden Ring">
+        <div class="cover c4">⚔️</div><div class="card-body">
+          <h3>Elden Ring</h3><div class="meta"><span>Action RPG</span><span class="rating">★ 9.7</span></div>
+          <div class="tags"><span class="tag">PC</span><span class="tag">PS5</span></div>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section id="featured">
+  <div class="container feature">
+    <div class="feature-text">
+      <span class="badge">Editor's Pick</span>
+      <h2>Ready for your next gaming adventure?</h2>
+      <p>Build your backlog, find new favorites and keep up with the games everyone is talking about.</p>
+      <a href="#games" class="btn primary">Browse Collection</a>
+    </div>
+    <div class="news" id="news">
+      <h2>📰 Latest News</h2>
+      <div class="news-item"><small>TODAY</small><h3>Big releases are coming</h3><p>Check out the games worth keeping on your radar this month.</p></div>
+      <div class="news-item"><small>YESTERDAY</small><h3>Build your perfect setup</h3><p>Small upgrades can make a huge difference to your gaming desk.</p></div>
+      <div class="news-item"><small>THIS WEEK</small><h3>5 games you shouldn't miss</h3><p>Our editors pick their favorite games for the week.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="community">
+  <div class="container">
+    <div class="newsletter">
+      <h2>🎮 Join the GameVault community</h2>
+      <p>Get gaming updates and recommendations straight to your inbox.</p>
+      <form class="form" onsubmit="subscribe(event)">
+        <input id="email" type="email" placeholder="Enter your email" required>
+        <button class="btn primary" type="submit">Join Now</button>
+      </form>
+      <p id="message" style="margin-top:12px;color:#9ca9c2"></p>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="container footer">
+    <strong>GAMEVAULT 🎮</strong>
+    <span>Made for gamers. © 2026 GameVault</span>
+  </div>
+</footer>
+
+<script>
+function filterGames(){
+  const q=document.getElementById('search').value.toLowerCase();
+  const cards=[...document.querySelectorAll('.card')];
+  let shown=0;
+  cards.forEach(card=>{
+    const match=card.dataset.name.toLowerCase().includes(q);
+    card.style.display=match?'block':'none';
+    if(match) shown++;
+  });
+  let no=document.querySelector('.no-results');
+  if(!shown){
+    if(!no){no=document.createElement('div');no.className='no-results';no.textContent='No games found 😢';document.getElementById('gameGrid').appendChild(no)}
+  }else if(no) no.remove();
+}
+function subscribe(e){
+  e.preventDefault();
+  document.getElementById('message').textContent='🎉 You’re in! Welcome to GameVault.';
+  document.getElementById('email').value='';
+}
+function toggleMenu(){
+  const nav=document.querySelector('nav');
+  nav.style.display=nav.style.display==='flex'?'none':'flex';
+  nav.style.flexDirection='column';
+  nav.style.position='absolute';
+  nav.style.top='72px';
+  nav.style.right='4%';
+  nav.style.background='#111827';
+  nav.style.padding='18px';
+  nav.style.border='1px solid #26314a';
+  nav.style.borderRadius='12px';
+}
+</script>
+</body>
+</html>
